@@ -2,7 +2,7 @@
     "cartTitle": "PARCELpk",
     "cartDescription": "Parcelpk",
     "cartLogo": "/images/mylogo.png",
-    "baseUrl": "http://localhost:1111",
+    "baseUrl": "http://www.parcelpk.com",
     "emailHost": "smtp.zoho.com",
     "emailPort": 465,
     "emailSecure": false,
