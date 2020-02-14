@@ -458,6 +458,7 @@ a {
 .page-link {
   color: black;
   border: 0;
+  margin-top: 120px;
 }
 .navbar-default .navbar-toggle:hover,
 .navbar-default .navbar-toggle:focus {
