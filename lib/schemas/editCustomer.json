@@ -30,7 +30,7 @@
             "isNotEmpty": true
         },
         "postcode": {
-            "type": "string",
+            "type": "string"
         },
         "phone": {
             "type": "string",
