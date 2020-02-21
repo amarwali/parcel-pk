@@ -21,7 +21,7 @@
     "paymentGateway": "instore",
     "databaseConnectionString": "mongodb+srv://amarwali7:cocain02..@parcelpkcluster-wvamt.mongodb.net/test?retryWrites=true&w=majority",
     "theme": "Cloth",
-    "trackStock": true,
+    "trackStock": false,
     "orderHook": "",
     "availableLanguages": [
         "en",
