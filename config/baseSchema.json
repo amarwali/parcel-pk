@@ -93,7 +93,7 @@
         },
         "trackStock": {
             "type": "boolean",
-            "default": true
+            "default": false
         },
         "orderHook": {
             "format": "uri-template"
