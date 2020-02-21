@@ -31,7 +31,6 @@
         },
         "postcode": {
             "type": "string",
-            "isNotEmpty": true
         },
         "phone": {
             "type": "string",
@@ -49,7 +48,6 @@
         "address1",
         "country",
         "state",
-        "postcode",
         "phone",
         "password"
     ]
