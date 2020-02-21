@@ -26,7 +26,7 @@
         },
         "emailSecure": {
             "type": "boolean",
-            "default": false
+            "default": true
         },
         "emailUser": {
             "type": "string"
@@ -93,7 +93,7 @@
         },
         "trackStock": {
             "type": "boolean",
-            "default": false
+            "default": true
         },
         "orderHook": {
             "format": "uri-template"
