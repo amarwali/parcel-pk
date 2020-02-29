@@ -14,23 +14,7 @@
     "productsPerPage": 9,
     "menuTitle": "Menu",
     "footerHtml": "&lt;head&gt;\r\n  &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css&quot;&gt;\r\n&lt;head&gt;\r\n&lt;footer class=&quot;footer-distributed&quot;&gt;\r\n&Tab;&Tab;&Tab;&lt;div class=&quot;footer-right&quot;&gt;\r\n&Tab;&Tab;&Tab;&Tab;&lt;a href=&quot;https://www.facebook.com/parcelpkofficial&quot; target=&quot;_blank&quot;&gt;&lt;i class=&quot;fa fa-facebook&quot;&gt;&lt;/i&gt;&lt;/a&gt;\r\n&Tab;&Tab;&Tab;&Tab;&lt;a href=&quot;https://www.instagram.com/parcelpkofficial&quot; target=&quot;_blank&quot;&gt;&lt;i class=&quot;fa fa-instagram&quot;&gt;&lt;/i&gt;&lt;/a&gt;\r\n&Tab;&Tab;&Tab;&lt;/div&gt;\r\n&Tab;&Tab;&Tab;&lt;div class=&quot;footer-left&quot;&gt;\r\n&Tab;&Tab;&Tab;&Tab;&lt;p class=&quot;footer-links&quot;&gt;\r\n&Tab;&Tab;&Tab;&Tab;&Tab;&lt;a class=&quot;link-1&quot;href=&quot;/&quot;&gt;Home&lt;/a&gt;\r\n&Tab;&Tab;&Tab;&Tab;&Tab;&lt;a href=&quot;#&quot;&gt;About&lt;/a&gt;\r\n&Tab;&Tab;&Tab;&Tab;&Tab;&lt;a href=&quot;#&quot;&gt;Contact&lt;/a&gt;\r\n&Tab;&Tab;&Tab;&Tab;&lt;/p&gt;\r\n&Tab;&Tab;&Tab;&Tab;&lt;p&gt;Parcelpk &copy; 2019.Design & Developed by: AWK&lt;/p&gt;\r\n&Tab;&Tab;&Tab;&lt;/div&gt;\r\n&Tab;&Tab;&lt;/footer&gt;",
-    "googleAnalytics": "<!-- Facebook Pixel Code -->
-<script>
-  !function(f,b,e,v,n,t,s)
-  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-  n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s)}(window, document,'script',
-  'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '772630166523871');
-  fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-  src="https://www.facebook.com/tr?id=772630166523871&ev=PageView&noscript=1"
-/></noscript>
-<!-- End Facebook Pixel Code -->",
+    "googleAnalytics": "",
     "injectJs": "",
     "customCss": ".navbar{background-color:black;padding:2rem 2rem}.page-link{color:black;margin-bottom:80px}.navbar-brand&gt;img{width:180px;height:100%}.navbar-brand:hover{color:#fffaf0}.dropdown-toggle{background-color:green}.fa-shopping-cart{color:#fff}.menu-btn{color:#fff}.productsWrapper{margin-bottom:50px}.product-layout{padding-top:30px;padding-bottom:30px;margin-bottom:10px}@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);footer{font-family:Roboto}.footer-distributed{background-color:#000;box-shadow:0 1px 1px 0 rgba(0,0,0,0.12);box-sizing:border-box;width:100%;text-align:left;font:normal 16px sans-serif;padding:25px 30px}.footer-distributed .footer-left p{color:#8f9296;font-size:14px;margin:0}.footer-distributed p.footer-links{font-size:18px;font-weight:bold;color:#fff;margin:0 0 10px;padding:0;transition:ease .25s}.footer-distributed p.footer-links a{display:inline-block;line-height:1.8;text-decoration:none;color:inherit;transition:ease .25s}.footer-distributed .footer-links a:before{content:&quot;&centerdot;&quot;;font-size:20px;left:0;color:#fff;display:inline-block;padding-right:5px}.footer-distributed .footer-links .link-1:before{content:none}.footer-distributed .footer-right{float:right;margin-top:6px;max-width:180px}.footer-distributed .footer-right a{display:inline-block;width:35px;height:35px;background-color:#33383b;border-radius:2px;font-size:20px;color:#fff;text-align:center;line-height:35px;margin-left:3px;transition:all .25s}.footer-distributed .footer-right a:hover{transform:scale(1.1);-webkit-transform:scale(1.1)}.footer-distributed p.footer-links a:hover{text-decoration:underline}@media(max-width:600px){.footer-distributed .footer-left,.footer-distributed .footer-right{text-align:center}.footer-distributed .footer-right{float:none;margin:0 auto 20px}.footer-distributed .footer-left p.footer-links{line-height:1.8}}",
     "currencySymbol": "Rs",
