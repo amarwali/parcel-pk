@@ -1,30 +1,3 @@
-# expressCart
-
-![expressCart](https://raw.githubusercontent.com/mrvautin/expressCart/master/public/images/logo.png)
-
-`expressCart` is a fully functional shopping cart built in Node.js (Express, MongoDB) with Stripe, PayPal, Authorize.net, Adyen and Instore payments.
-
-[![Github stars](https://img.shields.io/github/stars/mrvautin/expressCart.svg?style=social&label=Star)](https://github.com/mrvautin/expressCart)
-[![Build Status](https://travis-ci.org/mrvautin/expressCart.svg?branch=master)](https://travis-ci.org/mrvautin/expressCart)
-
-[**View the demo**](https://demo.expresscart.markmoffat.com/)
-
-
-```
-Demo credentials
-
-Admin User:
-- User: `demo@test.com`
-- Password: `test`
-
-Customer:
-- User: `test@test.com`
-- Password: `test`
-
-Discount code:
-- 10 amount: `DEMO_AMT10`
-- 10 percent: `DEMO_PCT10`
-```
 
 ## Installation
 
