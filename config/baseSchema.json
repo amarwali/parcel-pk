@@ -69,11 +69,11 @@
         },
         "currencySymbol": {
             "type": "string",
-            "default": "£"
+            "default": "Rs"
         },
         "currencyISO": {
             "type": "string",
-            "default": "USD"
+            "default": "RS"
         },
         "paymentGateway": {
             "type": "string",
@@ -93,7 +93,7 @@
         },
         "trackStock": {
             "type": "boolean",
-            "default": false
+            "default": true
         },
         "orderHook": {
             "format": "uri-template"
