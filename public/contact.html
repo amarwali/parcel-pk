@@ -125,6 +125,65 @@
       line-height: 1.8;
    }
 }
+body {
+    background-color: #d8d8d8;
+}
+h1, h2, h3 {
+  text-align: center;
+  font-family: Helvetica, sans-serif;
+}
+.social-menu ul {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+.social-menu ul li {
+    list-style: none;
+    margin: 0 10px;
+}
+.social-menu ul li .fa {
+    color: #000000;
+    font-size: 25px;
+    line-height: 50px;
+    transition: .5s;
+}
+.social-menu ul li .fa:hover {
+    color: #ffffff;
+}
+.social-menu ul li a {
+    position: relative;
+    display: block;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: white;
+    text-align: center;
+    transition: 0.5s;
+    transform: translate(0,0px);
+    box-shadow: 0px 7px 5px rgba(0, 0, 0, 0.5);
+}
+.social-menu ul li a:hover {
+    transform: rotate(0deg) skew(0deg) translate(0, -10px);
+}
+.social-menu ul li:nth-child(1) a:hover {
+    background-color: #3b5999;
+}
+.social-menu ul li:nth-child(2) a:hover {
+    background-color: #55acee;
+}
+.social-menu ul li:nth-child(3) a:hover {
+    background-color: #e4405f;
+}
+.social-menu ul li:nth-child(4) a:hover {
+    background-color: #cd201f;
+}
+.social-menu ul li:nth-child(5) a:hover {
+    background-color: #0077B5;
+}
 </style>
   </head>
   <body>
@@ -135,9 +194,20 @@
 	  </a>
     </div>
     <div class="grid-item center">
-	<h3>Contact Us</h3>
-	
-	</div>
+      <div class="social-menu">
+         <h1><b>Contact Us</b></h1>
+         <ul>
+           <li><a href="https://www.facebook.com/parcelpkofficial" target="_blank"><i class="fa fa-facebook"></i></a></li>
+           <li><a href="https://www.messenger.com/t/parcelpkofficial" target="_blank"><i class="fa fa-commenting"></i></a></li>
+           <li><a href="http://www.instagram.com/parcelpkofficial" target="_blank"><i class="fa fa-instagram"></i></a></li>
+           <li><a href="mailto:parcelpk247@gmail.com" target="_blank"><i class="fa fa-envelope"></i></a></li>
+         </ul>
+
+         <h2><b>Ask Us</b></h2>
+         <h3><b>We are here to help!</b></h3>
+
+       </div>
+	 </div>
     <div class="grid-item">
 		<footer class="footer-distributed">
 			<div class="footer-right">
@@ -148,7 +218,7 @@
 					<p class="footer-links">
 						<a class="link-1"href="http://www.parcelpk.com">Home</a>
 						<a href="http://www.parcelpk.com/return.html">Return Policy</a>
-						<a href="#">Contact</a>
+						<a href="http://www.parcelpk.com/contact.html">Contact</a>
 					</p>
 					<p>Parcelpk © 2019.Design & Developed by: AWK</p>
 				</div>
