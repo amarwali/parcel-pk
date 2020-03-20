@@ -1,7 +1,7 @@
 {
-  "name": "express-cart",
-  "version": "1.1.17",
-  "description": "A fully functioning Node.js shopping cart with Stripe, PayPal and Authorize.net payments.",
+  "name": "parcel-pk",
+  "version": "1.1.16",
+  "description": "Parcelpk clothing website",
   "private": false,
   "scripts": {
     "start": "node app.js",
@@ -54,7 +54,7 @@
     "lunr": "^2.3.8",
     "mime-db": "^1.43.0",
     "mime-type": "^3.0.7",
-    "mkdirp": "^0.5.1",
+    "mkdirp": "^1.0.3",
     "moment": "^2.24.0",
     "mongodb": "^3.3.3",
     "mongodb-uri": "^0.9.7",
@@ -76,7 +76,7 @@
     "yenv": "^2.1.1"
   },
   "devDependencies": {
-    "ava": "^2.4.0",
+    "ava": "^3.5.0",
     "eslint": "^6.8.0",
     "eslint-config-standard": "^13.0.1",
     "eslint-plugin-extra-rules": "0.0.0-development",
@@ -117,4 +117,5 @@
   "license": "AWK",
   "bugs": {
     "url": "https://github.com/mrvautin/expressCart/issues"
+  }
 }
