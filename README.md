@@ -1,3 +1,30 @@
+# expressCart
+
+![expressCart](https://raw.githubusercontent.com/mrvautin/expressCart/master/public/images/logo.png)
+
+`expressCart` is a fully functional shopping cart built in Node.js (Express, MongoDB) with Stripe, PayPal, Blockonomics, Authorize.net, Adyen and Instore payments.
+
+[![Github stars](https://img.shields.io/github/stars/mrvautin/expressCart.svg?style=social&label=Star)](https://github.com/mrvautin/expressCart)
+[![Build Status](https://travis-ci.org/mrvautin/expressCart.svg?branch=master)](https://travis-ci.org/mrvautin/expressCart)
+
+[**View the demo**](https://demo.expresscart.markmoffat.com/)
+
+
+```
+Demo credentials
+
+Admin User:
+- User: `demo@test.com`
+- Password: `test`
+
+Customer:
+- User: `test@test.com`
+- Password: `test`
+
+Discount code:
+- 10 amount: `DEMO_AMT10`
+- 10 percent: `DEMO_PCT10`
+```
 
 ## Installation
 
@@ -63,13 +90,13 @@ Homepage:
 ![Homepage](https://mrvautin.com/content/images/2020/01/expressCart-homepage.png)
 
 Admin manage settings:
-![Admin manage settings](https://mrvautin.com/content/images/2020/01/expressCart-admin-settings.png)
+![Admin manage settings](https://mrvautin.com/content/images/2020/03/expressCart-admin-settings.png)
 
 Popout cart:
 ![Popout cart](https://mrvautin.com/content/images/2020/01/expressCart-popout-cart.png)
 
 Dashboard:
-![Dashboard](https://mrvautin.com/content/images/2020/01/expressCart-admin-dashboard.png)
+![Dashboard](https://mrvautin.com/content/images/2020/03/expressCart-admin-dashboard.png)
 
 ##### CSS
 
@@ -135,13 +162,13 @@ Note: The `databaseConnectionString` property requires a full connection string.
 
 Settings can be managed from the admin panel ([http://127.0.0.1:1111/admin](http://127.0.0.1:1111/admin)) with the exception of the Payment gateway and database settings.
 
-All settings are stored in json files in the `/config` directory. The main application-level settings are stored in `/config/settings.json` while payment gateway settings are stored in files in the `/config` directory named after the payment gateway. For example, configuration for the Stripe payment gateway is stored in `/config/stripe.json`.
+All settings are stored in json files in the `/config` directory. The main application-level settings are stored in `/config/settings.json` while payment gateway settings are stored in files in the `/config` directory named after the payment gateway. For example, configuration for the Stripe payment gateway is stored in `/config/payment/config/stripe.json`.
+
+Configs are validated against the schema files. For the `settings.json` this will be validated against the `settingsSchema.json` file. The Payment gateway config is validated agaist the `/config/payment/schema/<gateway>.json` file.
 
 ##### Local configuration
 
 If you'd rather store settings in a file which isn't checked into version control, you can create a new settings file at `/config/settings-local.json` and store your complete settings there. When viewing or editing settings in the admin panel, expressCart will detect the existence of this file and update it accordingly.
-
-This can also be used for payment modules too. Any settings in the `/config/<gateway>-local.json` file will override the `/config/<gateway>.json` file.
 
 ##### Environment configuration
 
@@ -157,6 +184,8 @@ production:
 ```
 
 The app will read in the `NODE_ENV` and switch and override any valid settings. Eg: `databaseConnectionString` set in the `env.yaml` file will override anything in `settings.json` file (including local).
+
+This can also be used for payment modules too. Any settings in the `env.yaml` file will override the `/config/payment/config/<gateway>.json` file.
 
 ##### Cart name and Cart description
 
@@ -179,7 +208,7 @@ This email is used for any email receipts which are sent by your website.
 
 ##### Payment Gateway
 
-This determines which payment gateway to use. You will also need to configure your payment gateway configuration file here: `/config/<gateway_name>.json`
+This determines which payment gateway to use. You will also need to configure your payment gateway configuration file here: `/config/payment/config/<gateway_name>.json` or use the `env.yaml` file.
 
 ##### Currency symbol
 
@@ -218,7 +247,7 @@ will create a 'breadcrumb' menu at the top of the page
 
 ##### Paypal (Payments)
 
-The Paypal config file is located: `/config/paypal.json`. A example Paypal settings file is provided:
+The Paypal config file is located: `/config/payment/config/paypal.json`. A example Paypal settings file is provided:
 
 ```
 {
@@ -233,7 +262,7 @@ Note: The `client_id` and `client_secret` is obtained from your Paypal account.
 
 ##### Stripe (Payments)
 
-The Stripe config file is located: `/config/stripe.json`. A example Stripe settings file is provided:
+The Stripe config file is located: `/config/payment/config/stripe.json`. A example Stripe settings file is provided:
 
 ```
 {
@@ -248,9 +277,26 @@ The Stripe config file is located: `/config/stripe.json`. A example Stripe setti
 
 Note: The `secretKey`, `publicKey` and `stripeWebhookSecret` is obtained from your Stripe account dashboard.
 
+##### Blockonomics (Bitcoin Payments)
+
+You have to configure the `HTTP Callback URL` parameter into Blockonomics -> Merchants -> Settings:
+http://CartURL/blockonomics/checkout_return where [**CartURL**](#cart-url) is the address of your server
+
+The Blockonomics config file is located: `/config/payment/config/blockonomics.json`. A example Blockonomics settings file is provided:
+
+```
+{
+    "apiKey": "this_is_not_real",
+    "hostUrl": "https://www.blockonomics.co", // You usually don't need to change this
+    "newAddressApi": "/api/new_address", // You usually don't need to change this
+    "priceApi": "/api/price?currency=" // You usually don't need to change this
+}
+```
+Note: The `apiKey` is obtained from your Blockonomics account.
+
 ##### Authorize.net (Payments)
 
-The Authorize.net config file is located: `/config/authorizenet.json`. A example Authorize.net settings file is provided:
+The Authorize.net config file is located: `/config/payment/config/authorizenet.json`. A example Authorize.net settings file is provided:
 
 ```
 {
@@ -265,7 +311,7 @@ Note: The credentials are obtained from your Authorize.net account dashboard.
 
 ##### Adyen (Payments)
 
-The Adyen config file is located: `/config/adyen.json`. A example Adyen settings file is provided:
+The Adyen config file is located: `/config/payment/config/adyen.json`. A example Adyen settings file is provided:
 
 ```
 {
@@ -282,7 +328,7 @@ Note: The `publicKey`, `apiKey` and `merchantAccount` is obtained from your Adye
 
 ##### Instore (Payments)
 
-The Instore config file is located: `/config/instore.json`. A example Instore settings file is provided:
+The Instore config file is located: `/config/payment/config/instore.json`. A example Instore settings file is provided:
 
 ```
 {
@@ -356,6 +402,6 @@ New static pages are setup via `/admin/settings/pages`.
 
 I'm looking for contributors of any kind. I'm working on turning the admin panel into something more modern and using Vue.js. The frontend part of the website will always be a normal webapp with no SPA frameworks as I believe eCommerce apps should have SEO as top priority.
 
-Contributing payment providers and themes would be much appreciated. Payment providers are added by simply adding the payment provider file to `/routes/payments/providerName.js`, then adding the route to the `app.js` file by adding `const providerName = require('./routes/payments/{providerName}');` and mounting the route `app.use('/providerName', providerName);`.
+Contributing payment providers and themes would be much appreciated. Payment providers are added by simply adding the payment provider file to `/lib/payments/provider.js`.
 
 If you see current code which could be enhanced (note: parts of the code is quite old but new to Github) you are welcome to submit a PR.
