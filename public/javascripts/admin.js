@@ -1,6 +1,12 @@
 /* eslint-disable prefer-arrow-callback, no-var, no-tabs */
 /* globals showNotification, slugify, numeral, moment, feather */
 $(document).ready(function (){
+    $.ajaxSetup({
+        headers: {
+            'csrf-token': $('meta[name="csrfToken"]').attr('content')
+        }
+    });
+
     $(document).on('click', '#btnGenerateAPIkey', function(e){
         e.preventDefault();
         $.ajax({
@@ -116,6 +122,10 @@ $(document).ready(function (){
         });
     });
 
+    $(document).on('click', '#btnUserAdd', function(e){
+        $('#userNewForm').submit();
+    });
+
     $('#userNewForm').validator().on('submit', function(e){
         if(!e.isDefaultPrevented()){
             e.preventDefault();
@@ -153,6 +163,10 @@ $(document).ready(function (){
                 showNotification(msg.responseJSON.message, 'danger');
             });
         }
+    });
+
+    $(document).on('click', '#btnUserEdit', function(e){
+        $('#userEditForm').submit();
     });
 
     $('#userEditForm').validator().on('submit', function(e){
@@ -204,6 +218,12 @@ $(document).ready(function (){
                 showNotification(msg.message, 'success', false, '/admin/product/edit/' + msg.productId);
             })
             .fail(function(msg){
+                if(msg.responseJSON.length > 0){
+                    var errorMessages = validationErrors(msg.responseJSON);
+                    $('#validationModalBody').html(errorMessages);
+                    $('#validationModal').modal('show');
+                    return;
+                }
                 showNotification(msg.responseJSON.message, 'danger');
             });
         }
@@ -236,6 +256,13 @@ $(document).ready(function (){
                 showNotification(msg.message, 'success', true);
             })
             .fail(function(msg){
+                if(msg.responseJSON.length > 0){
+                    var errorMessages = validationErrors(msg.responseJSON);
+                    console.log('errorMessages', errorMessages);
+                    $('#validationModalBody').html(errorMessages);
+                    $('#validationModal').modal('show');
+                    return;
+                }
                 showNotification(msg.responseJSON.message, 'danger');
             });
         }
@@ -827,4 +854,12 @@ function globalSearch(){
 
         feather.replace();
     });
+}
+
+function validationErrors(errors){
+    var errorMessage = '';
+    errors.forEach((value) => {
+        errorMessage += `<p>${value.dataPath.replace('/', '')} - <span class="text-danger">${value.message}<span></p>`;
+    });
+    return errorMessage;
 }

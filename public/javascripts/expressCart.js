@@ -80,8 +80,8 @@ $(document).ready(function (){
 
     if($('#pager').length){
         var pageNum = $('#pageNum').val();
-        var pageLen = $('#productsPerPage').val();
-        var productCount = $('#totalProductCount').val();
+        var pageLen = $('#itemsPerPage').val();
+        var itemCount = $('#totalItemCount').val();
         var paginateUrl = $('#paginateUrl').val();
         var searchTerm = $('#searchTerm').val();
 
@@ -90,11 +90,12 @@ $(document).ready(function (){
         }
 
         var pagerHref = '/' + paginateUrl + '/' + searchTerm + '{{number}}';
-        var totalProducts = Math.ceil(productCount / pageLen);
+        var totalItems = Math.ceil(itemCount / pageLen);
 
-        if(parseInt(productCount) > parseInt(pageLen)){
+        if(parseInt(itemCount) > parseInt(pageLen)){
+            console.log('here?');
             $('#pager').bootpag({
-                total: totalProducts,
+                total: totalItems,
                 page: pageNum,
                 maxVisible: 5,
                 href: pagerHref,
@@ -162,6 +163,7 @@ $(document).ready(function (){
                 url: route,
                 data: {
                     email: $('#shipEmail').val(),
+                    company: $('#shipCompany').val(),
                     firstName: $('#shipFirstname').val(),
                     lastName: $('#shipLastname').val(),
                     address1: $('#shipAddr1').val(),
@@ -236,6 +238,27 @@ $(document).ready(function (){
         e.preventDefault();
     });
 
+    $('#customerloginForm').on('click', function(e){
+        if(!e.isDefaultPrevented()){
+            e.preventDefault();
+            $.ajax({
+                method: 'POST',
+                url: '/customer/login_action',
+                data: {
+                    loginEmail: $('#email').val(),
+                    loginPassword: $('#password').val()
+                }
+            })
+            .done(function(msg){
+                window.location = '/customer/account';
+            })
+            .fail(function(msg){
+                showNotification(msg.responseJSON.message, 'danger');
+            });
+        }
+        e.preventDefault();
+    });
+
     // call update settings API
     $('#customerLogin').on('click', function(e){
         if(!e.isDefaultPrevented()){
@@ -267,6 +290,37 @@ $(document).ready(function (){
             });
         }
         e.preventDefault();
+    });
+
+    // Customer saving own details
+    $('#customerSave').validator().on('click', function(e){
+        e.preventDefault();
+        if($('#customer-form').validator('validate').has('.has-error').length === 0){
+            $.ajax({
+                method: 'POST',
+                url: '/customer/update',
+                data: {
+                    email: $('#shipEmail').val(),
+                    company: $('#shipCompany').val(),
+                    firstName: $('#shipFirstname').val(),
+                    lastName: $('#shipLastname').val(),
+                    address1: $('#shipAddr1').val(),
+                    address2: $('#shipAddr2').val(),
+                    country: $('#shipCountry').val(),
+                    state: $('#shipState').val(),
+                    postcode: $('#shipPostcode').val(),
+                    phone: $('#shipPhoneNumber').val(),
+                    password: $('#newCustomerPassword').val(),
+                    orderComment: $('#orderComment').val()
+                }
+            })
+            .done(function(){
+                showNotification('Customer saved', 'success');
+            })
+            .fail(function(msg){
+                showNotification(msg.responseJSON.message, 'danger');
+            });
+        }
     });
 
     $(document).on('click', '.image-next', function(e){
@@ -431,6 +485,52 @@ $(document).ready(function (){
 		// alert
         showNotification(messageVal, messageTypeVal || 'danger', false);
     }
+
+    // checkout-blockonomics page (blockonomics_payment route) handling START ***
+    if($('#blockonomics_div').length > 0){
+        var orderid = $('#blockonomics_div').data('orderid') || '';
+        var timestamp = $('#blockonomics_div').data('timestamp') || -1;
+        var address = $('#blockonomics_div').data('address') || '';
+        var blSocket = new WebSocket('wss://www.blockonomics.co/payment/' + address + '?timestamp=' + timestamp);
+        blSocket.onopen = function (msg){
+        };
+        var timeOutMinutes = 10;
+        setTimeout(function (){
+            $('#blockonomics_waiting').html('<b>Payment expired</b><br><br><b><a href=\'/checkout/payment\'>Click here</a></b> to try again.<br><br>If you already paid, your order will be processed automatically.');
+            showNotification('Payment expired', 'danger');
+            blSocket.close();
+        }, 1000 * 60 * timeOutMinutes);
+
+        var countdownel = $('#blockonomics_timeout');
+        var endDatebl = new Date((new Date()).getTime() + 1000 * 60 * timeOutMinutes);
+        var blcountdown = setInterval(function (){
+            var now = new Date().getTime();
+            var distance = endDatebl - now;
+            if(distance < 0){
+                clearInterval(blcountdown);
+                return;
+            }
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            countdownel.html(minutes + 'm ' + seconds + 's');
+        }, 1000);
+
+        blSocket.onmessage = function (msg){
+            var data = JSON.parse(msg.data);
+            if((data.status === 0) || (data.status === 1) || (data.status === 2)){
+                // redirect to order confirmation page
+                var orderMessage = '<br>View <b><a href="/payment/' + orderid + '">Order</a></b>';
+                $('#blockonomics_waiting').html('Payment detected (<b>' + data.value / 1e8 + ' BTC</b>).' + orderMessage);
+                showNotification('Payment detected', 'success');
+                $('#cart-count').html('0');
+                blSocket.close();
+                $.ajax({ method: 'POST', url: '/product/emptycart' }).done(function (){
+                    window.location.replace('/payment/' + orderid);
+                });
+            }
+        };
+    }
+    // checkout-blockonomics page (blockonomics_payment route) handling ***  END
 });
 
 function checkMaxQuantity(e, element){
@@ -562,8 +662,8 @@ function updateCartDiv(){
         // If the cart has contents
         if(cart){
             $('#cart-empty').empty();
-            Object.keys(cart).forEach(function(productId){
-                var item = cart[productId];
+            Object.keys(cart).forEach(function(cartId){
+                var item = cart[cartId];
                 // Setup the product
                 var productTotalAmount = numeral(item.totalItemPrice).format('0.00');
                 var optionsHtml = '';
@@ -601,14 +701,21 @@ function updateCartDiv(){
                                             <div class="input-group-prepend">
                                                 <button class="btn btn-primary btn-qty-minus" type="button">-</button>
                                             </div>
-                                            <input type="number" class="form-control cart-product-quantity text-center" data-cartid="${productId}" data-id="${item.id}" maxlength="2" value="${item.quantity}">
+                                            <input 
+                                                type="number" 
+                                                class="form-control cart-product-quantity text-center"
+                                                data-cartid="${cartId}"
+                                                data-id="${item.productId}" 
+                                                maxlength="2" 
+                                                value="${item.quantity}"
+                                            >
                                             <div class="input-group-append">
                                                 <button class="btn btn-primary btn-qty-add" type="button">+</button>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-4 col-md-2 no-pad-left">
-                                        <button class="btn btn-danger btn-delete-from-cart" data-cartid="${productId}" type="button"><i class="feather" data-feather="trash-2" data-cartid="${productId}"></i></button>
+                                        <button class="btn btn-danger btn-delete-from-cart" data-cartid="${cartId}" type="button"><i class="feather" data-feather="trash-2" data-cartid="${cartId}"></i></button>
                                     </div>
                                     <div class="col-8 col-md-4 align-self-center text-right">
                                         <strong class="my-auto">${result.currencySymbol}${productTotalAmount}</strong>
