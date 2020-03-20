@@ -9,13 +9,21 @@ const fs = require('fs');
 const path = require('path');
 const router = express.Router();
 
-router.get('/admin/products', restrict, async (req, res, next) => {
-    const db = req.app.db;
-    // get the top results
-    const topResults = await db.products.find({}).sort({ productAddedDate: -1 }).limit(10).toArray();
+router.get('/admin/products/:page?', restrict, async (req, res, next) => {
+    let pageNum = 1;
+    if(req.params.page){
+        pageNum = req.params.page;
+    }
+
+    // Get our paginated data
+    const products = await common.paginateData(false, req, pageNum, 'products', {}, { productAddedDate: -1 });
+
     res.render('products', {
         title: 'Cart',
-        results: topResults,
+        results: products.data,
+        totalItemCount: products.totalItems,
+        pageNum,
+        paginateUrl: 'admin/products',
         resultType: 'top',
         session: req.session,
         admin: true,
@@ -249,10 +257,7 @@ router.post('/admin/product/update', restrict, checkAccess, async (req, res) => 
     // Validate the body again schema
     const schemaValidate = validateJson('editProduct', productDoc);
     if(!schemaValidate.result){
-        res.status(400).json({
-            message: 'Form invalid. Please check values and try again.',
-            error: schemaValidate.errors
-        });
+        res.status(400).json(schemaValidate.errors);
         return;
     }
 

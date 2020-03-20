@@ -34,7 +34,12 @@
                 <input type="text" class="form-control" name="address1" id="address1" value={{result.address1}} required>
             </div>
         </div>
-        
+        <div class="col-sm-12">
+            <div class="form-group">
+            <label class="control-label">{{ @root.__ "Address 2" }}</label>
+                <input type="text" class="form-control" name="address2" id="address2" value={{result.address2}}>
+            </div>
+        </div>
         <div class="col-sm-12">
             <div class="form-group">
             <label class="control-label">{{ @root.__ "Country" }} *</label>
@@ -55,19 +60,13 @@
         <div class="col-sm-5">
             <div class="form-group">
             <label class="control-label">{{ @root.__ "Postcode" }} *</label>
-                <input type="text" class="form-control" name="postcode" id="postcode" value={{result.postcode}}>
+                <input type="text" class="form-control" name="postcode" id="postcode" value={{result.postcode}} required>
             </div>
         </div>
         <div class="col-sm-5">
             <div class="form-group">
             <label class="control-label">{{ @root.__ "Phone number" }} *</label>
                 <input type="text" class="form-control" name="phone" id="phone" value={{result.phone}} required>
-            </div>
-        </div>
-        <div class="col-sm-12">
-            <div class="form-group">
-            <label class="control-label">{{ @root.__ "Address 2" }}</label>
-                <input type="text" class="form-control" name="address2" id="address2" value={{result.address2}}>
             </div>
         </div>
         <div class="col-sm-5">

@@ -22,6 +22,7 @@
         <meta name="description" content="{{snip config.cartDescription}}">
         {{/if}}
         {{/if}}
+        <meta name="csrfToken" content="{{csrfToken}}">
 		<meta name="keywords" content="{{config.cartTitle}}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha256-L/W5Wfqfa0sdBNIKN9cG6QA5F2qx4qICmU2VgLruv9Y=" crossorigin="anonymous" />
         <link rel="stylesheet" href="/stylesheets/pushy{{config.env}}.css">
@@ -184,6 +185,19 @@
                         </div>
                     </div>
                     {{/ifCond}}
+                    {{#if @root.session.customerPresent}}
+                    <div class="dropdown d-none d-sm-block">
+                        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{{feather 'user'}}}
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li><a class="dropdown-item" href="/customer/account">Account</a></li>
+                            <li><a class="dropdown-item" href="/customer/logout">Logout</a></li>
+                        </div>
+                    </div>
+                    {{else}}
+                        <li class="nav-item ml-3"><a href="/customer/account" class="btn">{{{feather 'user'}}}</a></li>
+                    {{/if}}
                     {{#if @root.session.cart}}
                         <li class="nav-item"><a href="/checkout/cart" class="btn menu-btn">{{{feather 'shopping-cart'}}} {{ @root.__ "Cart" }} <span class="badge badge-danger" id="cart-count">{{@root.session.totalCartItems}}</span></a></li>
                         {{else}}
@@ -219,7 +233,7 @@
             {{/ifCond}}
         {{/unless}}
 		<div class="container-fluid content-body h-100" id="container">
-            <div class="row h-100">
+            <div class="row">
                 {{{body}}}
             </div>
 		</div>
@@ -245,27 +259,8 @@
 		{{/if}}
         <script src="/javascripts/pushy.min.js"></script>
         {{#if admin}}
-        <div class="modal fade" id="globalSearchModal" tabindex="-1" role="dialog" aria-labelledby="globalSearchModal"
-            aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content global-search-modal-content">
-                    <div class="modal-header global-search-modal-header"></div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="form-group global-search-form">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <label class="input-group-text search-input-addon" for="global-search-value">{{{feather 'search'}}}</label>
-                                    </div>
-                                    <input type="text" class="form-control form-control-lg" id="global-search-value">
-                                </div>
-                            </div>
-                        </form>
-                        <ul class="list-group col-12 invisible" id="global-search-results"></ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+        {{> partials/globalSearchModal}}
+        {{> partials/validationModal}}
         {{/if}}
         {{> partials/confirmModal}}
         <script>
