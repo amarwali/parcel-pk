@@ -17,6 +17,7 @@ const {
     emptyCart,
     updateSubscriptionCheck,
     paginateData,
+    getSort,
     addSitemapProducts,
     getCountryList
 } = require('../lib/common');
@@ -528,7 +529,7 @@ router.post('/product/addtocart', async (req, res, next) => {
     }
 
     // If stock management on check there is sufficient stock for this product
-    if(config.trackStock){
+    if(config.trackStock && product.productStock){
         // If there is more stock than total (ignoring held)
         if(productQuantity > product.productStock){
             return res.status(400).json({ message: 'There is insufficient stock of this product.' });
@@ -709,7 +710,7 @@ router.get('/category/:cat/:pageNum?', (req, res) => {
     }
 
     Promise.all([
-        paginateData(true, req, pageNum, 'products', { _id: { $in: lunrIdArray } }),
+        paginateData(true, req, pageNum, 'products', { _id: { $in: lunrIdArray } }, getSort()),
         getMenu(db)
     ])
         .then(([results, menu]) => {
@@ -791,7 +792,7 @@ router.get('/page/:pageNum', (req, res, next) => {
     const numberProducts = config.productsPerPage ? config.productsPerPage : 6;
 
     Promise.all([
-        paginateData(true, req, req.params.pageNum, 'products'),
+        paginateData(true, req, req.params.pageNum, 'products', {}, getSort()),
         getMenu(db)
     ])
         .then(([results, menu]) => {
@@ -832,7 +833,7 @@ router.get('/:page?', async (req, res, next) => {
     // if no page is specified, just render page 1 of the cart
     if(!req.params.page){
         Promise.all([
-            paginateData(true, req, 1, 'products', {}),
+            paginateData(true, req, 1, 'products', {}, getSort()),
             getMenu(db)
         ])
             .then(([results, menu]) => {
