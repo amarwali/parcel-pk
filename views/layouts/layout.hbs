@@ -5,7 +5,12 @@
 		<title>{{title}}</title>
 	    <meta charset="utf-8">
     	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-        {{#if admin}}
+		<!-- Solving facebook errors -->
+		<!---->
+		<meta property="og:image" content="https://www.parcelpk.com/images/mylogo.png" />
+		<meta property="fb:app_id" content="248579806196448" />
+        <!--END-->
+		{{#if admin}}
         <link rel="icon" type="image/png" href="/images/favicon.png" />
         <!--[if IE]><link rel="SHORTCUT ICON" href="/images/favicon.png"/><![endif]-->
         {{else}}
