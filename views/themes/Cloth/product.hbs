@@ -98,4 +98,11 @@
         </div>
     </div>
 </div>
+<div id="fixey">
+    {{#if @root.session.cart}}
+        <a href="/checkout/cart" class="btn menu-btn">{{{feather 'shopping-cart'}}} </a>
+    {{else}}
+        <a href="/checkout/cart" class="btn menu-btn">{{{feather 'shopping-cart'}}} </a>
+    {{/if}}
+</div>
 <input type="hidden" id="productId" value="{{result._id}}">
