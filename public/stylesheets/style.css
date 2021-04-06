@@ -66,6 +66,13 @@ a.text-danger:focus {
 .thumbnail-image {
   cursor: pointer;
 }
+.w3-button{
+  align-self: center;
+  width: 100px;
+  height: 40px;
+  background-color: #000000;
+  color: white;
+}
 #product-images {
   margin-bottom: 30px;
 }
