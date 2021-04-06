@@ -89,9 +89,11 @@
                 </div>
                 {{/if}}
                 <div class="col-md-10 btnAddToCart">
-                    <button class="btn btn-primary btn-block product-add-to-cart" type="button">{{ @root.__ "Add to cart" }}</button>
-                </div>
-                <div class="col-md-10 body_text">
+		    <a href="/checkout/cart" class="btn menu-btn">
+                    <button class="btn btn-primary btn-block product-add-to-cart" type="button">{{ @root.__ "Buy Now" }}</button>
+		    </a>
+                </div>                
+		<div class="col-md-10 body_text">
                     {{{fixTags result.productDescription}}}
                 </div>
             </div>

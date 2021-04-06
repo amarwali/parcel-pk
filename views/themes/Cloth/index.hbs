@@ -1,5 +1,7 @@
 {{> themes/Cloth/front-menu}}
 <div class="productsWrapper col-sm-12 col-md-8 offset-md-2">
+<br>
+    <h2 class="w3-center">Hot Selling Products</h2>
     {{#if filtered}}
         <div class="product-layout product-results col-sm-12">
             {{#ifCond @root.paginateUrl '==' 'category'}}
@@ -50,20 +52,13 @@
                     <h3 class="product-price mp-0 text-center">
                         {{currencySymbol ../config.currencySymbol}}{{formatAmount productPrice}}
                     </h3>
-                    <p class="text-center">
+                    <!-- <p class="text-center">
                         <a class="btn btn-primary add-to-cart" data-id="{{this._id}}" data-link="{{this.productPermalink}}" data-has-options="{{checkProductOptions this.productOptions}}" role="button">{{ @root.__ "Add to cart" }}</a>
-                    </p>
+                    </p> add to cart home page disabled --> 
                 </div>
             </div>
         {{/each}}
-        <div id="fixey">
-            {{#if @root.session.cart}}
-                <a href="/checkout/cart" class="btn menu-btn">{{{feather 'shopping-cart'}}} </a>
-            {{else}}
-                <a href="/checkout/cart" class="btn menu-btn">{{{feather 'shopping-cart'}}} </a>
-            {{/if}}
         </div>
-    </div>
 </div>
 <input type="hidden" id="itemsPerPage" value="{{productsPerPage}}" >
 <input type="hidden" id="pageNum" value="{{pageNum}}">
@@ -73,3 +68,22 @@
 <div class="col-md-12">
     <div id="pager" class="d-flex justify-content-center"></div>
 </div>
+<script>
+var slideIndex = 1;
+showDivs(slideIndex);
+
+function plusDivs(n) {
+  showDivs(slideIndex += n);
+}
+
+function showDivs(n) {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  if (n > x.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = x.length}
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";  
+  }
+  x[slideIndex-1].style.display = "block";  
+}
+</script>
